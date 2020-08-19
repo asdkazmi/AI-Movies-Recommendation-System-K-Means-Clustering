@@ -8,16 +8,18 @@ class dataEngineering:
     def __init__(self):
         self.users = None
         self.users_movies_list = None
-        self.sparseMatrix = None
-        self.feature_names = None
+        # self.sparseMatrix = None
+        # self.feature_names = None
     # A method which will load users data for us which we were prepaired and saved into local
     # The data was already in proper format. If anyone using any database, then he/she can edit this method to load data
     # into pandas DataFrame in the same format as we were described earlier.
-    def loadUsersData(self):
+    def loadUsersData(self, from_loc = './Prepairing Data/From Data/filtered_ratings.csv'):
         try:
             print('dataEngineering -> loadUsersData: Loading users data...')
-            users_data = pd.read_csv('./Prepairing Data/From Data/filtered_ratings.csv')
+            # YOUR EDIT [START HERE]
+            users_data = pd.read_csv(from_loc)
             # users_data = a dataframe of users favourite movies or users watched movies
+            # YOUR EDIT [END HERE]
             users = np.unique(users_data['userId'])
             # users = a list of users IDs in descending order
         except:
@@ -30,8 +32,8 @@ class dataEngineering:
                     {'users_data': users_data, 
                      'users_list': users}]
     # define a method which will create a list containing string of movies list for each user with users IDs in descending order
-    def moviesListForUsers(self):
-        load_users_data = self.loadUsersData()
+    def moviesListForUsers(self, from_loc = './Prepairing Data/From Data/filtered_ratings.csv'):
+        load_users_data = self.loadUsersData(from_loc)
         if load_users_data[0]:
             users_data = load_users_data[1]['users_data']
             self.users = load_users_data[1]['users_list']
@@ -43,13 +45,13 @@ class dataEngineering:
         else:
             print('dataEngineering -> moviesListForUsers: Error in loading users data: ', load_users_data[1])
     # define a method to prepair a sparse matrix of each user against favourite movies list
-    def prepSparseMatrix(self):
+    def prepSparseMatrix(self, from_loc = './Prepairing Data/From Data/filtered_ratings.csv'):
         # list_of_str = A list, which contain strings of users favourite movies separate by comma ",".
         # It will return us sparse matrix and feature names on which sparse matrix is defined 
         # i.e. name of movies in the same order as the column of sparse matrix
         if self.users_movies_list is None:
             print('dataEngineering -> prepSparseMatrix: Movies list is not perpaired.')
-            self.moviesListForUsers()
+            self.moviesListForUsers(from_loc)
         print('dataEngineering -> prepSparseMatrix: Prepairing sparse matrix...')
         cv = CountVectorizer(token_pattern = r'[^\,\ ]+', lowercase = False)
         sparseMatrix = cv.fit_transform(self.users_movies_list)

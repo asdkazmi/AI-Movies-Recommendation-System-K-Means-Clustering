@@ -11,7 +11,7 @@ class elbowMethod():
     def run(self, init, upto, max_iterations = 300):
         for i in range(init, upto + 1):
             kmeans = KMeans(n_clusters=i, init = 'k-means++', max_iter = max_iterations, n_init = 10, random_state = 0)
-            kmeans.fit(sparseMatrix)
+            kmeans.fit(self.sparseMatrix)
             self.wcss.append(kmeans.inertia_)
         self.differences = list()
         for i in range(len(self.wcss)-1):
