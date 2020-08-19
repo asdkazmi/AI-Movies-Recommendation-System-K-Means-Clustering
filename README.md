@@ -23,11 +23,14 @@ Different modules are designed and their APIs are discussed as follows
 5. userRequestedFor
 #### 1. dataEngineering
 Import it as `from Modules.dataEngineering import dataEngineering`
-dataEngineering is a class which will be used to prepare data for k-means clustering model
-create instance of dataEngineering as
+
+**Purpose**: dataEngineering is a class which will be used to prepare data for k-means clustering model
+
+Create instance of dataEngineering as
 ```
 YOUR_VAR_NAME = dataEngineering()
 ```
+- Arguments: _No_
 ##### Attributes:
 - **users** -> Default: None | It will be a list of users IDs in descending order.
 - **users_movies_list** -> Default: None | It will be list of strings where each string will contain user movies separated by comma ",".
@@ -37,6 +40,7 @@ YOUR_VAR_NAME = dataEngineering()
     - `from_loc` -> Default: './Prepairing Data/From Data/filtered_ratings.csv' | Must be a string with valid location of data _csv_ file. _csv_ file format must be following
       
       _csv_ file format -> Number of Rows: Any | Columns: `['userId', 'movieId']` where `'userId'` column should contain IDs of users and `'movieId'` column should contain ID of movie which user has added into his favorite OR has watched OR any other type on which you want to make recommendations. `'userId'` column could contain multiple entries of same ID.
+  - Purpose: It will be used to load users data from location and create list of users IDs in users data.
   - Attribute Updates: _False_
   - Associated Method: _No_
   - Return: Python `list` of length 2.
@@ -54,12 +58,14 @@ YOUR_VAR_NAME = dataEngineering()
 - `moviesListForUsers(from_loc)`: 
   - Arguments:
     - `from_loc` -> It will be used with associated method `loadUsersData(from_loc)`. See `loadUsersData(from_loc)` method docs for further detail on `from_loc` argument. 
+  - Purpose: It will be used to create a list of strings containing IDs of movies of each user (obtained from users data) separated by comma ",". The order of list will be same as list of users obtained from `loadUsersData` which is in descending order.
   - Attribute Updates: `users`, `users_movies_list`
   - Associated Method: `loadUsersData(from_loc)`
-  - Return: _Nothing_
+  - Return: _None_
 - `prepSparseMatrix(from_loc)`: 
   - Arguments: 
     - `from_loc` -> It will be used with associated method `moviesListForUsers(from_loc)`. It is required only if attribute **users_movies_list** not updated and still `None`. See `loadUsersData(from_loc)` method docs for further detail on `from_loc` argument.
+  - Purpose: It will create a sparse matrix (NumPy Array) with dimensions `(Number of Users, Number of Movies)` with value `1` if users has movie in its list, otherwise `0`
   - Attribute Updates: _No_
   - Associated Method: `moviesListForUsers(from_loc)` -> If attribute **users_movies_list** is `None`.
   - Return: Python `list` of length 2.
@@ -68,7 +74,7 @@ YOUR_VAR_NAME = dataEngineering()
     - Index 1:
       - `dict` with following format 
         ```
-        {'sparse_matrix': It will be a sparse matrix (NumPy Array) with dimensions `(Number of Users, Number of Movies)` with value `1` if users has movie in its list, otherwise `0`,
+        {'sparse_matrix': Required sparse matrix as described in purpose,
          'feature_names': It will be an array containing all movies IDs in the same order as the columns in **sparseMatrix**}
         ```
 - `showSparseMatrix(sparseMatrix, feature_names, users)`: 
@@ -79,3 +85,37 @@ YOUR_VAR_NAME = dataEngineering()
   - Attribute Updates: _False_
   - Associated Method: _No_
   - Return: Panda DataFrame with presentation of sparse matrix containing indexes with users IDs and columns with movies IDs.
+
+#### 2. elbowMethod
+Import it as `from Modules.elbowMethod import elbowMethod`
+
+**Purpose**: It will be used to analyze the optimal number of clusters for k-means algorithm. It will not run with app but can be used by individual for only analysis purpose.
+
+Create instance of elbowMethod as
+```
+YOUR_VAR_NAME = elbowMethod(sparseMatrix)
+``` 
+- Arguments:
+  - sparseMatrix: A sparse matrix obtained from `dataEngineering` module method `prepSparseMatrix()`.
+##### Attributes:
+- **sparseMatrix** -> Default: A sparse matrix given by argument `sparseMatrix`
+- **wcss** -> Default: `list()` | A list which will contain WCSS values obtained from k-means algorithm.
+- **differences** -> Default: `list()` | A list which will contain difference between each two consective WCSS values.
+##### Methods:
+- `run(init, upto, max_iterations = 300)`: 
+  - Arguments:
+    - `init` -> Default: None | Initial number of clusters.
+    - `upto` -> Default: None | Final number of clusters.
+    - `max_iterations` - > Default: 300 | It can be any +ve int to set KMeans iterations during clustering.
+  - Purpose: It will calculate WCSS values and their difference between _init_ to _upto_ numbers of clusters.
+  - Attribute Updates: `sparseMatrix`, `wcss` and `differences`
+  - Associated Method: _No_
+  - Return: _None_
+- `showPlot(boundary = 500, upto_cluster = None)`: 
+  - Arguments:
+    - `boundary` - > Default: 500 | A boundary which you want to set
+  - Purpose: 
+  - Attribute Updates: 
+  - Associated Method: 
+  - Return: 
+    - 
