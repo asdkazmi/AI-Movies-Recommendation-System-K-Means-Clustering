@@ -185,7 +185,7 @@ _None_
   - Return: It will return following:
     - `data`: if file loaded or read successfully then it will return data from the source filename
     - `[False, err]`: If file not loaded, then return `False` and a string `err` containing error information.
-#### kmeansModel
+#### 4. kmeansModel
 Import it as `from Modules.kmeansModel import kmeansModel`
 
 **Purpose**: It will be used to make clusters of users, clusters movies lists, methods to fix small clusters.
@@ -206,8 +206,49 @@ YOUR_VAR_NAME = kmeansModel()
   - Arguments:
     - `users_cluster` - > Default: None | A panda DataFrame containing users clusters as described in **Attributes**.
     - `users_data` - > Default: None | A panda DataFrame containing users data as described in following -> Module: `dataEngineering` -> Method: `loadUsersData(from_loc)` -> Arguments: `from_loc` -> csv file format.
-  - Purpose: It will be used to prepare a list of panda DataFrames containing each cluster movies as described in **Attributes** -> **clusters_movies_df**.
-  - Attribute Updates: 
-  - Associated Method: 
-  - Return: 
-    - 
+  - Purpose: It will be used to prepare a list of panda DataFrames containing each cluster movies as structure described in **Attributes** -> **clusters_movies_df**.
+  - Attribute Updates: _None_
+  - Associated Method: _None_
+  - Return: A list of panda DataFrames containing each cluster movies with structure described in **Attributes** -> **clusters_movies_df**
+- `fixClusters(clusters_movies_dataframes, users_cluster_dataframe, users_data, smallest_cluster_size = 11)`: 
+  - Arguments:
+    - `clusters_movies_dataframes` - > Default: None | A panda DataFrame obtained from `clustersMovies` method.
+    - `users_cluster_dataframe` - > Default: None | A panda DataFrame with structure and information as described in **Attributes** -> **users_cluster**.
+    - `users_data` - > Default: None | A panda DataFrame of users detail. For structure see -> Module: `dataEngineering` -> Method: `loadUsersData(from_loc)` -> Arguments: `from_loc` -> csv file format.
+    - `smallest_cluster_size` - > Default: 11 | An `int` value indicating the smallest cluster size. See below _Purpose_
+  - Purpose: It will be used to fix small clusters whose sizes are less than `smallest_cluster_size`. The small clusters will be deleted and the users belonging to those clusters will be shifted to others clusters which containing more relevant data with highest probability and users with more similar taste of them. Also the cluster in which users will be shifted will also updated with small clusters users records.
+  - Attribute Updates: _None_
+  - Associated Method: `getMyMovies() from userRequestedFor`: `userRequestedFor` is a module, read docs below in section 5.
+  - Return: A `tuple` containing following:
+    - Updated and fixed `clusters_movies_dataframes`
+    - Updated and fixed `users_cluster_dataframe`
+- `run_model(sparseMatrix = None, fix_clusters = True, smallest_cluster = 6)`: 
+  - Arguments:
+    - `sparseMatrix` - > Default: None | A sparse matrix which can be obtained from `dataEngineering().prepSparseMatrix()`. See `dataEngineering` module
+      **Note**: If not given, then it will calculate byself by using default location of `from_loc`. If you're using a different type data source to load model, then run it yourself.
+    - `fix_clusters` - > Default: True | `fixClusters` method will be called if _True_ or _Default_ to fix small clusters which are not enough for making recommendation.
+    - `smallest_cluster` - > Default: 6 | Needed only if `fix_clusters` is _True_. The smallest cluster size which we want.
+  - Purpose: It is the K-Means model which will run to make users clusters and each cluster movies collections based on matrix provided in `sparseMatrix`. This method will call itself `loadUsersData() from dataEngineering` to load users data as given in method `loadUsersData()`.
+  - Attribute Updates: `users_cluster` and `clusters_movies_df`.
+  - Associated Method: `clustersMovies`, `fixClusters`, `prepSparseMatrix() from dataEngineering` and `loadUsersData() from dataEngineering`.
+  - Return: A `list` of length 2
+    - Index 0:
+      _True_: If run successfully
+      _False: If any error arise.
+    - Index 1:
+      If Index 0 is _True_: A `dict` with following format 
+      ```
+      {'users_cluster': users_cluster, 'clusters_movies_df': clusters_movies_df}
+      ```
+      If Index 0 is _False_: A `str` containing error information.
+- `saveFiles`: 
+  - Arguments: _None_
+  - Purpose: To save training data after call of `run_model` into files at default locations provided in `saveLoadFiles` module.
+  - Attribute Updates: _None_
+  - Associated Method: `saveClusterMoviesDataset(data)` and `saveUsersClusters(data)`
+  - Return: A `list` of length 2
+    - Index 0:
+      _True_: If files saved successfully.
+      _False_: Else
+    - Index 1:
+      A `str` containing information of success or error.
