@@ -18,8 +18,8 @@ Sys version:  3.7.7
 Different modules are designed and their APIs are discussed as follows
 1. dataEngineering
 2. elbowMethod
-3. kmeansModel
-4. saveLoadFiles
+3. saveLoadFiles
+4. kmeansModel
 5. userRequestedFor
 #### 1. dataEngineering
 Import it as `from Modules.dataEngineering import dataEngineering`
@@ -119,7 +119,7 @@ YOUR_VAR_NAME = elbowMethod(sparseMatrix)
   - Attribute Updates: _False_
   - Associated Method: _None_
   - Return: Matplotlib plots.
-#### saveLoadFiles
+#### 3. saveLoadFiles
 Import it as `from Modules.saveLoadFiles import saveLoadFiles`
 
 **Purpose**: To save and load files to local by using `pickle` library.
@@ -185,3 +185,29 @@ _None_
   - Return: It will return following:
     - `data`: if file loaded or read successfully then it will return data from the source filename
     - `[False, err]`: If file not loaded, then return `False` and a string `err` containing error information.
+#### kmeansModel
+Import it as `from Modules.kmeansModel import kmeansModel`
+
+**Purpose**: It will be used to make clusters of users, clusters movies lists, methods to fix small clusters.
+**Inherits**: This method inherits `KMeans` and `saveLoadFiles` classes. So, it inhertis all the properties of `KMeans` algorithm of `sklearn` library and `saveLoadFiles` module.
+
+Create instance of kmeansModel as
+```
+YOUR_VAR_NAME = kmeansModel()
+```
+- Arguments: _None_
+##### Attributes:
+- **It inherits all the attributes of `KMeans` class/object of `sklearn`**.
+- **users_cluster** -> Default: None | It will be a pandas DataFrame of users clusters with structure `(Rows: The number of Users, Columns: ['userId', 'Cluster'])`.
+- **clusters_movies_df** -> Default: None | It will be a list containing panda DataFrames of each cluster movies list with following structure `[dataframe_of_cluster_1, dataframe_of_cluster_2, ..., dataframe_of_cluster_N]` where each cluster DataFrame will be of following structure `(Rows: The number of movies in cluster, Columns: ['movieId', 'Counts'])` where `Counts` is the value telling the number of users in the clusters who has particular movie in their list.
+##### Methods:
+**It inherits all the methods of `saveLoadFiles`**
+- `clustersMovies(users_cluster, users_data)`: 
+  - Arguments:
+    - `users_cluster` - > Default: None | A panda DataFrame containing users clusters as described in **Attributes**.
+    - `users_data` - > Default: None | A panda DataFrame containing users data as described in following -> Module: `dataEngineering` -> Method: `loadUsersData(from_loc)` -> Arguments: `from_loc` -> csv file format.
+  - Purpose: It will be used to prepare a list of panda DataFrames containing each cluster movies as described in **Attributes** -> **clusters_movies_df**.
+  - Attribute Updates: 
+  - Associated Method: 
+  - Return: 
+    - 
