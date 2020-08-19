@@ -66,7 +66,7 @@ YOUR_VAR_NAME = dataEngineering()
   - Arguments: 
     - `from_loc` -> It will be used with associated method `moviesListForUsers(from_loc)`. It is required only if attribute **users_movies_list** not updated and still `None`. See `loadUsersData(from_loc)` method docs for further detail on `from_loc` argument.
   - Purpose: It will create a sparse matrix (NumPy Array) with dimensions `(Number of Users, Number of Movies)` with value `1` if users has movie in its list, otherwise `0`
-  - Attribute Updates: _No_
+  - Attribute Updates: _False_
   - Associated Method: `moviesListForUsers(from_loc)` -> If attribute **users_movies_list** is `None`.
   - Return: Python `list` of length 2.
     - Index 0: 
@@ -83,7 +83,7 @@ YOUR_VAR_NAME = dataEngineering()
     - `feature_names` -> An array of feature names obtained from `prepSparseMatrix(from_loc)` method.
     - `users` -> An array of users IDs saved in **users** attribute if not `None`.
   - Attribute Updates: _False_
-  - Associated Method: _No_
+  - Associated Method: _None_
   - Return: Panda DataFrame with presentation of sparse matrix containing indexes with users IDs and columns with movies IDs.
 
 #### 2. elbowMethod
@@ -109,13 +109,13 @@ YOUR_VAR_NAME = elbowMethod(sparseMatrix)
     - `max_iterations` - > Default: 300 | It can be any +ve int to set KMeans iterations during clustering.
   - Purpose: It will calculate WCSS values and their difference between _init_ to _upto_ numbers of clusters.
   - Attribute Updates: `sparseMatrix`, `wcss` and `differences`
-  - Associated Method: _No_
+  - Associated Method: _None_
   - Return: _None_
 - `showPlot(boundary = 500, upto_cluster = None)`: 
   - Arguments:
-    - `boundary` - > Default: 500 | A boundary which you want to set
-  - Purpose: 
-  - Attribute Updates: 
-  - Associated Method: 
-  - Return: 
+    - `boundary` - > Default: 500 | A boundary which you want to set for minimum WCSS value.
+  - Purpose: It will show plots of elbow method and differences of WCSS to analyze cluster numbers.
+  - Attribute Updates: _False_
+  - Associated Method: _None_
+  - Return: Matplotlib plots.
     - 
