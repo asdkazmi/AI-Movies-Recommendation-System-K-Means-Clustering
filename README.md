@@ -119,3 +119,69 @@ YOUR_VAR_NAME = elbowMethod(sparseMatrix)
   - Attribute Updates: _False_
   - Associated Method: _None_
   - Return: Matplotlib plots.
+#### saveLoadFiles
+Import it as `from Modules.saveLoadFiles import saveLoadFiles`
+
+**Purpose**: To save and load files to local by using `pickle` library.
+
+Create instance of saveLoadFiles as
+```
+YOUR_VAR_NAME = saveLoadFiles()
+```
+- Arguments: _None_
+##### Attributes: 
+_None_
+##### Methods:
+- `save(filename, data)`: 
+  - Arguments:
+    - `filename` - > Default: None | A string containing pickle filename (no need to write _pkl_ extension at the end) in which you want to write data inside the directory `~/datasets/`
+    - `data` -> Default: None | The data which you want to save inside filename.
+  - Purpose: It will be used to save or write data in the pkl file.
+  - Attribute Updates: _False_
+  - Associated Method: _False_
+  - Return: A `list` containing following
+    - `[True]`: If file saved successfully
+    - `[False, err]`: If file not saved, then return `False` and a string `err` containing error information.
+- `load(filename)`: 
+  - Arguments:
+    - `filename` - > Default: None | A string containing pickle filename (no need to write _pkl_ extension at the end) which you want to load from the directory `~/datasets/`
+  - Purpose: It will be used to load or read data in the pkl file.
+  - Attribute Updates: _False_
+  - Associated Method: _False_
+  - Return: It will return following:
+    - `data`: if file loaded or read successfully then it will return data from the source filename
+    - `[False, err]`: If file not loaded, then return `False` and a string `err` containing error information.
+- `saveClusterMoviesDataset(data)`: 
+  - Arguments:
+    - `data` - > Default: None | A data which you want to save in the location `~/datasets/clusters_movies_dataset.pkl`.
+  - Purpose: It will save data in the location `~/datasets/clusters_movies_dataset.pkl`. It is designed to save list of clusters movies dataframes.
+  - Attribute Updates: _None_
+  - Associated Method: `save(filename)`
+  - Return: A `list` containing following
+    - `[True]`: If file saved successfully
+    - `[False, err]`: If file not saved, then return `False` and a string `err` containing error information.
+- `loadClusterMoviesDataset()`: 
+  - Arguments: _None_
+  - Purpose: It will load data from location `~/datasets/clusters_movies_dataset.pkl`. It is designed to load list of clusters movies dataframes.
+  - Attribute Updates: _None_
+  - Associated Method: `load(filename)`
+  - Return: It will return following:
+    - `data`: if file loaded or read successfully then it will return data from the source filename
+    - `[False, err]`: If file not loaded, then return `False` and a string `err` containing error information.
+- `saveUsersClusters(data)`: 
+  - Arguments:
+    - `data` - > Default: None | A data which you want to save in the location `~/datasets/users_clusters.pkl`.
+  - Purpose: It will save data in the location `~/datasets/users_clusters.pkl`. It is designed to save dataframe of users clusters.
+  - Attribute Updates: _None_
+  - Associated Method: `save(filename)`
+  - Return: A `list` containing following
+    - `[True]`: If file saved successfully
+    - `[False, err]`: If file not saved, then return `False` and a string `err` containing error information.
+- `loadUsersClusters()`: 
+  - Arguments: _None_
+  - Purpose: It will load data from location `~/datasets/users_clusters.pkl`. It is designed to load dataframe of users clusters.
+  - Attribute Updates: _None_
+  - Associated Method: `load(filename)`
+  - Return: It will return following:
+    - `data`: if file loaded or read successfully then it will return data from the source filename
+    - `[False, err]`: If file not loaded, then return `False` and a string `err` containing error information.
