@@ -31,16 +31,15 @@ YOUR_VAR_NAME = dataEngineering()
 ##### Attributes:
 - **users** -> Default: None | It will be a list of users IDs in descending order.
 - **users_movies_list** -> Default: None | It will be list of strings where each string will contain user movies separated by comma ",".
-- **sparseMatrix** -> Default: None | It will be sparse matrix (NumPy Array) with dimensions `(Number of Users, Number of Movies)` with value `1` if users has movie in its list, otherwise `0`.
-- **feature_names** -> Default: None | It will be an array containing all movies IDs in the same order as the columns in **sparseMatrix**.
 ##### Methods:
-- ```loadUsersData(from_loc)```
+- `loadUsersData(from_loc)`
   - Arguments:
     - `from_loc` -> Default: './Prepairing Data/From Data/filtered_ratings.csv' | Must be a string with valid location of data _csv_ file. _csv_ file format must be following
       
       _csv_ file format -> Number of Rows: Any | Columns: `['userId', 'movieId']` where `'userId'` column should contain IDs of users and `'movieId'` column should contain ID of movie which user has added into his favorite OR has watched OR any other type on which you want to make recommendations. `'userId'` column could contain multiple entries of same ID.
   - Attribute Updates: _False_
-  - Return: Python `list` with length 2.
+  - Associated Method: _No_
+  - Return: Python `list` of length 2.
     - Index 0: 
       - `True`: If data loaded successfully.
       - `False`: If any error arise.
@@ -51,3 +50,32 @@ YOUR_VAR_NAME = dataEngineering()
          'users_list': A list of users IDs in descending order extracted from users_data}
         ```
       - If index 0 `False` then `str` containing error information.
+  - **Note**: If you're using any other way to load data, then it is recommended to edit this method to get your data and return in the same format as described above in the **_csv_ file format**. Please write your code inside the indicated area.
+- `moviesListForUsers(from_loc)`: 
+  - Arguments:
+    - `from_loc` -> It will be used with associated method `loadUsersData(from_loc)`. See `loadUsersData(from_loc)` method docs for further detail on `from_loc` argument. 
+  - Attribute Updates: `users`, `users_movies_list`
+  - Associated Method: `loadUsersData(from_loc)`
+  - Return: _Nothing_
+- `prepSparseMatrix(from_loc)`: 
+  - Arguments: 
+    - `from_loc` -> It will be used with associated method `moviesListForUsers(from_loc)`. It is required only if attribute **users_movies_list** not updated and still `None`. See `loadUsersData(from_loc)` method docs for further detail on `from_loc` argument.
+  - Attribute Updates: _No_
+  - Associated Method: `moviesListForUsers(from_loc)` -> If attribute **users_movies_list** is `None`.
+  - Return: Python `list` of length 2.
+    - Index 0: 
+      - `True`: If method runs successfully.
+    - Index 1:
+      - `dict` with following format 
+        ```
+        {'sparse_matrix': It will be a sparse matrix (NumPy Array) with dimensions `(Number of Users, Number of Movies)` with value `1` if users has movie in its list, otherwise `0`,
+         'feature_names': It will be an array containing all movies IDs in the same order as the columns in **sparseMatrix**}
+        ```
+- `showSparseMatrix(sparseMatrix, feature_names, users)`: 
+  - Arguments:
+    - `sparseMatrix` -> A sparse matrix obtained from `prepSparseMatrix(from_loc)` method.
+    - `feature_names` -> An array of feature names obtained from `prepSparseMatrix(from_loc)` method.
+    - `users` -> An array of users IDs saved in **users** attribute if not `None`.
+  - Attribute Updates: _False_
+  - Associated Method: _No_
+  - Return: Panda DataFrame with presentation of sparse matrix containing indexes with users IDs and columns with movies IDs.
