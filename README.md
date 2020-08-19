@@ -1,6 +1,7 @@
 # AI-Movies-Recommendation-System-K-Means-Clustering
 This is repository for a project of AI movies recommendation system based on k-means clustering algorithm with Flask-RESTFUL APIs. An associated article is published on medium, read it here
 [AI Movies Recommendation System Based on K-Means Clustering Algorithm](https://medium.com/@asdkazmi/ai-movies-recommendation-system-with-clustering-based-k-means-algorithm-f04467e02fcd)
+You can also download Jupyter Notebook **AI Movies Recommendation System Based on K-Means Clustering Algorithm** for the understanding of this whole project completely with step by step instructions and tutorials. This Python Notebook is similar as Medium article.
 
 ## Documentation
 In this section, the complete documentation is given to use model and it's different APIs. This model is very flexible with a lot of APIs and analysis methods on datasets. This project can work both with csv files and databases. It built default with csv file with format of MovieLens dataset but it is described that how to use it with other sources. 
