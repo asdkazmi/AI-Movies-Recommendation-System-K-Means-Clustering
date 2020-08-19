@@ -96,7 +96,7 @@ Create instance of elbowMethod as
 YOUR_VAR_NAME = elbowMethod(sparseMatrix)
 ``` 
 - Arguments:
-  - sparseMatrix: A sparse matrix obtained from `dataEngineering` module method `prepSparseMatrix()`.
+  - `sparseMatrix`: A sparse matrix obtained from `dataEngineering` module method `prepSparseMatrix()`.
 ##### Attributes:
 - **sparseMatrix** -> Default: A sparse matrix given by argument `sparseMatrix`
 - **wcss** -> Default: `list()` | A list which will contain WCSS values obtained from k-means algorithm.
@@ -114,8 +114,8 @@ YOUR_VAR_NAME = elbowMethod(sparseMatrix)
 - `showPlot(boundary = 500, upto_cluster = None)`: 
   - Arguments:
     - `boundary` - > Default: 500 | A boundary which you want to set for minimum WCSS value.
+    - `upto_cluster` -> Default: None | To show plot upto specific cluster numbers e.g. if `upto_cluster = 10` then it will return plot for clusters 1-10 only.
   - Purpose: It will show plots of elbow method and differences of WCSS to analyze cluster numbers.
   - Attribute Updates: _False_
   - Associated Method: _None_
   - Return: Matplotlib plots.
-    - 
