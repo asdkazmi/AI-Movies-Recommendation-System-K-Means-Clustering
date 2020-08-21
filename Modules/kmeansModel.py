@@ -10,6 +10,13 @@ from Modules.userRequestedFor import userRequestedFor
 class kmeansModel(KMeans, saveLoadFiles):
     def __init__(self):
         KMeans.__init__(self)
+        # Setting of k-means model
+        self.n_clusters=15
+        self.init = 'k-means++'
+        self.max_iter = 300
+        self.n_init = 10
+        self.random_state = 0
+        # Other attributes
         self.users_cluster = None
         self.clusters_movies_df = None
     def clustersMovies(self, users_cluster, users_data):
@@ -86,12 +93,6 @@ class kmeansModel(KMeans, saveLoadFiles):
             print('kmeansModel -> run_model: Error while running k-means model: ',err)
             return [False, err]
         print('kmeansModel -> run_model: Fitting and predicting k-means model...')
-        # Setting of k-means model
-        self.n_clusters=15
-        self.init = 'k-means++'
-        self.max_iter = 300
-        self.n_init = 10
-        self.random_state = 0
         # fitting and predicting k-means model
         clusters = self.fit_predict(sparseMatrix)
         print('kmeansModel -> run_model: Model fitting and predictions are completed.')
@@ -111,4 +112,24 @@ class kmeansModel(KMeans, saveLoadFiles):
         else:
             print('kmeansModel -> run_model: Error in loading users data inside k-means: ', load_users_data[1])
             return [False, load_users_data[1]]
-        
+    def saveFiles(self):
+        print('KMeans -> saveFiles: Trying to save files...')
+        if self.clusters_movies_df is None and self.users_cluster is None:
+            err = 'Model is not trained yet, please call run_model(...) method to train it first.'
+            print('KMeans -> saveFiles: ', err)
+            return [False, err]
+        else:
+            save_movies = self.saveClusterMoviesDataset(self.clusters_movies_df)
+            save_clusters = self.saveUsersClusters(self.users_cluster)
+            if save_movies[0] and save_clusters[0]:
+                success_msg = 'File Saved Successfully.'
+                print('KMeans -> saveFiles: ', success_msg)
+                return [True, success_msg]
+            else:
+                err = list()
+                if not save_movies[0]:
+                    err.append(['Error in Saving Movies Dataset', save_movies[1]])
+                if not save_clusters[0]:
+                    err.append(['Error in Saving Clusters Dataset', save_clusters[1]])
+                print('KMeans -> saveFiles: ', err)
+                return [False, err]

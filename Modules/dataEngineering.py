@@ -13,7 +13,7 @@ class dataEngineering:
     # A method which will load users data for us which we were prepaired and saved into local
     # The data was already in proper format. If anyone using any database, then he/she can edit this method to load data
     # into pandas DataFrame in the same format as we were described earlier.
-    def loadUsersData(self, from_loc = './Prepairing Data/From Data/filtered_ratings.csv'):
+    def loadUsersData(self, from_loc = './Prepairing Data/From Data/ratings.csv'):
         try:
             print('dataEngineering -> loadUsersData: Loading users data...')
             # YOUR EDIT [START HERE]
@@ -32,7 +32,7 @@ class dataEngineering:
                     {'users_data': users_data, 
                      'users_list': users}]
     # define a method which will create a list containing string of movies list for each user with users IDs in descending order
-    def moviesListForUsers(self, from_loc = './Prepairing Data/From Data/filtered_ratings.csv'):
+    def moviesListForUsers(self, from_loc = './Prepairing Data/From Data/ratings.csv'):
         load_users_data = self.loadUsersData(from_loc)
         if load_users_data[0]:
             users_data = load_users_data[1]['users_data']
@@ -45,7 +45,7 @@ class dataEngineering:
         else:
             print('dataEngineering -> moviesListForUsers: Error in loading users data: ', load_users_data[1])
     # define a method to prepair a sparse matrix of each user against favourite movies list
-    def prepSparseMatrix(self, from_loc = './Prepairing Data/From Data/filtered_ratings.csv'):
+    def prepSparseMatrix(self, from_loc = './Prepairing Data/From Data/ratings.csv'):
         # list_of_str = A list, which contain strings of users favourite movies separate by comma ",".
         # It will return us sparse matrix and feature names on which sparse matrix is defined 
         # i.e. name of movies in the same order as the column of sparse matrix
