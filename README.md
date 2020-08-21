@@ -225,6 +225,7 @@ YOUR_VAR_NAME = kmeansModel()
 - `run_model(sparseMatrix = None, fix_clusters = True, smallest_cluster = 6)`: 
   - Arguments:
     - `sparseMatrix` - > Default: None | A sparse matrix which can be obtained from `dataEngineering().prepSparseMatrix()`. See `dataEngineering` module
+      
       **Note**: If not given, then it will calculate byself by using default location of `from_loc`. If you're using a different type data source to load model, then run it yourself.
     - `fix_clusters` - > Default: True | `fixClusters` method will be called if _True_ or _Default_ to fix small clusters which are not enough for making recommendation.
     - `smallest_cluster` - > Default: 6 | Needed only if `fix_clusters` is _True_. The smallest cluster size which we want.
