@@ -1,7 +1,6 @@
 # AI-Movies-Recommendation-System-K-Means-Clustering
 This is repository for a project of AI movies recommendation system based on k-means clustering algorithm with Flask-RESTFUL APIs. An associated article is published on medium, read it here
 [AI Movies Recommendation System Based on K-Means Clustering Algorithm](https://medium.com/@asdkazmi/ai-movies-recommendation-system-with-clustering-based-k-means-algorithm-f04467e02fcd). You can also download Jupyter Notebook **AI Movies Recommendation System Based on K-Means Clustering Algorithm** from this repositry for the understanding of this whole project completely with step by step instructions and tutorials. This Python Notebook is similar as Medium article.
-
 ## Documentation
 In this section, the complete documentation is given to use model and it's different APIs. This model is very flexible with a lot of APIs and analysis methods on datasets. This project can work both with csv files and databases. It built default with csv file with format of MovieLens dataset but it is described that how to use it with other sources. 
 ### Required Libraries
@@ -14,6 +13,8 @@ Scikit-Learn version:  0.21.3
 Pickle version:  4.0
 Sys version:  3.7.7
 ```
+### How to Run?
+To run this app, first install all required libraries then run file `app.py` in root directory which is a `FLASK` app. APIs for training and recommendations are already designed. The following data files are necessary for this app in the directory `~/Prepairing Data/From Data/ratings.csv`. `rating.csv` file can be downloaded from [The Movies Dataset | Kaggle](https://www.kaggle.com/rounakbanik/the-movies-dataset?select=ratings.csv). If you have your own Datasets then please see the section `dataEngineering` -> `loadUsersData()` -> `csv file format` for format of dataset. If you want to load data from any database, then please edit the method `dataEngineering` -> `loadUsersData()`  in its allowed edit section, such that the returning format must be a DataFrame with the format described in `csv file format`. 
 ### Modules
 Different modules are designed and their APIs are discussed as follows
 1. dataEngineering
@@ -294,6 +295,6 @@ YOUR_VAR_NAME = userRequestedFor(user_id, users_data, making_recommendations = F
     - Index 0:
       - `True`: If method runs successfully.
       - `False`: If any error arise
-    - Index `:
+    - Index 1:
       - If Index 0 is _True_ then a `list` of movies IDs which are recommendation for user.
       - If Index 0 is _False_ then a `str` containing error information.
