@@ -234,14 +234,14 @@ YOUR_VAR_NAME = kmeansModel()
   - Associated Method: `clustersMovies`, `fixClusters`, `prepSparseMatrix() from dataEngineering` and `loadUsersData() from dataEngineering`.
   - Return: A `list` of length 2
     - Index 0:
-      _True_: If run successfully
-      _False: If any error arise.
+      - _True_: If run successfully
+      - _False: If any error arise.
     - Index 1:
-      If Index 0 is _True_: A `dict` with following format 
-      ```
-      {'users_cluster': users_cluster, 'clusters_movies_df': clusters_movies_df}
-      ```
-      If Index 0 is _False_: A `str` containing error information.
+      - If Index 0 is _True_: A `dict` with following format 
+        ```
+        {'users_cluster': users_cluster, 'clusters_movies_df': clusters_movies_df}
+        ```
+      - If Index 0 is _False_: A `str` containing error information.
 - `saveFiles`: 
   - Arguments: _None_
   - Purpose: To save training data after call of `run_model` into files at default locations provided in `saveLoadFiles` module.
@@ -249,7 +249,51 @@ YOUR_VAR_NAME = kmeansModel()
   - Associated Method: `saveClusterMoviesDataset(data)` and `saveUsersClusters(data)`
   - Return: A `list` of length 2
     - Index 0:
-      _True_: If files saved successfully.
-      _False_: Else
+      - _True_: If files saved successfully.
+      - _False_: Else
     - Index 1:
-      A `str` containing information of success or error.
+      - A `str` containing information of success or error.
+#### userRequestedFor
+Import it as `from Modules.userRequestedFor import userRequestedFor`
+
+**Purpose**: It will be used for different types of requests on users data. E.g. getting users movies list, making recommendations or updating users movies lists etc.
+
+Create instance of userRequestedFor as
+```
+YOUR_VAR_NAME = userRequestedFor(user_id, users_data, making_recommendations = False)
+```
+- Arguments:
+  - `user_id`: Default: None | A user ID for which request is being sent.
+  - `users_data`: Default: None | A panda DataFrame containing users data as described in following -> Module: `dataEngineering` -> Method: `loadUsersData(from_loc)` -> Arguments: `from_loc` -> csv file format.
+  - `making_recommendations`: If request is being called for recommendation methods, then set it _True_ else _False_. If set _True_ then object will load trained data saved in default directories see -> Module: `saveLoadFiles` -> Methods: `loadClusterMoviesDataset()` and `loadUsersClusters()`.
+##### Attributes:
+- **user_cluster** -> Default: None | if `making_recommendations = True`, then it will be user cluster number for whom request is being called. The associated for this attribute will be `loadUsersClusters() from saveLoadFiles`
+- **movies_list** -> Default: None | if `making_recommendations = True`, then it will be a list containing DataFrames of each cluster movies. For further detail, see Moduel: `kmeansModel` -> Attributes: `clusters_movies_df`. The associated for this attribute will be `loadClusterMoviesDataset() from saveLoadFiles`
+- **cluster_movies** -> Default: None | if `making_recommendations = True`, It will be a panda DataFrame of user cluster movies, obtained from _Attribute_ **movies_list**.
+- **cluster_movies_list** -> Default: None | if `making_recommendations = True`, It will be a list containing all the movies IDs in **cluster_movies** DataFrame.
+##### Methods:
+- `getMyMovies()`: 
+  - Arguments: _None_
+  - Purpose: It will be used to get list of all movies of user with "Attribute: `user_id`" from "Attribute: `users_data`".
+  - Attribute Updates: _False_
+  - Associated Method: _None_
+  - Return: See _Purpose_
+- `updatedFavouriteMoviesList(new_movie_Id)`: Should be called only if `making_recommendations = True`
+  - Arguments:
+    - `new_movie_Id` - > Default: None | A new movie ID of user with "Attribute: `user_id`", which we want to update in user cluster movies DataFrame. 
+  - Purpose: It should be called when `users_data` has updated for any new user movie entry, that if any user added another movie in his favourite list (or whatever recommendation analysis) then this method should be called to update already obtained data from KMeans to update movies data of user cluster.
+  - Attribute Updates: `cluster_movies`, `movies_list`
+  - Associated Method: `saveClusterMoviesDataset() from saveLoadFiles`
+  - Return: _None_
+- `recommendMostFavouriteMovies()`: Should be called only if `making_recommendations = True`
+  - Arguments: _None_
+  - Purpose: It will be used to make recommendation to user with user id "Attribute: `user_id`" from the user cluster movies data and the movies which user has not in his/her `users_data`.
+  - Attribute Updates: _False_
+  - Associated Method: _None_
+  - Return: A `list` with length 2.
+    - Index 0:
+      - `True`: If method runs successfully.
+      - `False`: If any error arise
+    - Index `:
+      - If Index 0 is _True_ then a `list` of movies IDs which are recommendation for user.
+      - If Index 0 is _False_ then a `str` containing error information.
